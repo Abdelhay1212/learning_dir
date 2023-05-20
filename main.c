@@ -39,7 +39,10 @@ void executeCommand(char **tokens)
 
    err = execve(tokens[0], tokens, NULL);
    if (err == -1)
+   {
 	   write(1, "hsh: command not found\n", 23);
+	   exit(1);
+   }
 }
 
 /**
