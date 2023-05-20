@@ -37,7 +37,7 @@ void executeCommand(char **tokens)
 {
    int err;
 
-   err = execvp(tokens[0], tokens);
+   err = execve(tokens[0], tokens, NULL);
    if (err == -1)
 	   write(1, "hsh: command not found\n", 23);
 }
@@ -55,14 +55,26 @@ int main(void)
 
    while (1)
    {
+      int err;
+
       write(1, "$ ", 2);
-      getline(&command, &bufsize, stdin);
+      err = getline(&command, &bufsize, stdin);
+      if (err == -1)
+      {
+	write(1, "\n", 1);
+	break;
+      }
 
       command[strcspn(command, "\n")] = '\0';
       tokens = tokenizeTheCommand(command);
 
       pid = fork();
-      if (pid == 0)
+      if (pid == -1)
+      {
+	write(1, "hsh: Fails to fork the process\n", 31);
+	exit(1);
+      }
+      else if (pid == 0)
          executeCommand(tokens);
       else
          wait(NULL);
@@ -71,6 +83,8 @@ int main(void)
          free(tokens[i]);
       free(tokens);
    }
+
+   free(command);
 
    return (0);
 }
