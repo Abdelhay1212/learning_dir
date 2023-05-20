@@ -51,6 +51,7 @@ void executeCommand(char **tokens)
  **/
 int main(void)
 {
+   int i;
    pid_t pid;
    char *command;
    char **tokens;
@@ -70,7 +71,7 @@ int main(void)
 
       command[strcspn(command, "\n")] = '\0';
       if (strcmp(command, "exit") == 0)
-	  exit();
+	  exit(1);
       tokens = tokenizeTheCommand(command);
 
       pid = fork();
@@ -84,7 +85,7 @@ int main(void)
       else
          wait(NULL);
 
-      for (int i = 0; tokens[i] != NULL; i++)
+      for (i = 0; tokens[i] != NULL; i++)
          free(tokens[i]);
       free(tokens);
    }
