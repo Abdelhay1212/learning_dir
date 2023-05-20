@@ -90,6 +90,7 @@ int main(void)
 	write(1, "hsh: Failed to fork the process\n", 31);
       }
       else if (pid == 0)
+	 setenv("TERM", "xterm", 1);
          executeCommand(tokens);
       else
          wait(NULL);
