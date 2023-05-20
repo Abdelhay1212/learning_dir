@@ -55,8 +55,7 @@ void executeCommand(char **tokens)
       }
    }
 	
-   if (err == -1)
-	   write(1, "hsh: command not found\n", 23);
+   perror("hsh");
 }
 
 /**
