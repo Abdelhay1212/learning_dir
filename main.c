@@ -54,6 +54,9 @@ void executeCommand(char **tokens)
 	    free(path);
       }
    }
+	
+   if (err == -1)
+	   write(1, "hsh: command not found\n", 23);
 }
 
 /**
@@ -77,19 +80,17 @@ int main(void)
       if (err == -1)
       {
 	write(1, "\n", 1);
-	break;
       }
 
       command[strcspn(command, "\n")] = '\0';
       if (strcmp(command, "exit") == 0)
-	  exit(1);
+	  exit(0);
       tokens = tokenizeTheCommand(command);
 
       pid = fork();
       if (pid == -1)
       {
 	write(1, "hsh: Failed to fork the process\n", 31);
-	exit(1);
       }
       else if (pid == 0)
          executeCommand(tokens);
