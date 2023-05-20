@@ -36,12 +36,23 @@ char **tokenizeTheCommand(char *command)
 void executeCommand(char **tokens)
 {
    int err;
-
-   err = execve(tokens[0], tokens, NULL);
-   if (err == -1)
+   char* pathEnv = getenv("PATH");
+   char* pathToken;
+   char* path;
+	
+   pathEnv = strtok(pathEnv, ":");
+   while (pathEnv != NULL)
    {
-	   write(1, "hsh: command not found\n", 23);
-	   exit(1);
+      path = malloc(strlen(tokens[0]) + strlen(pathEnv) + 2); 
+      sprintf(path, "%s/%s", pathToken, tokens[0]);
+      err = execve(path, tokens, NULL);
+      if (err == -1)      
+            pathEnv = strtok(NULL, ":");
+      else
+      {
+	    pathEnv = NULL;
+	    free(path);
+      }
    }
 }
 
