@@ -53,7 +53,6 @@ void executeCommand(char **tokens)
 	    pathToken = NULL;
 	    free(path);
       }
-      perror("hsh: command not found\n");
    }
 }
 
