@@ -69,6 +69,8 @@ int main(void)
       }
 
       command[strcspn(command, "\n")] = '\0';
+      if (strcmp(command, "exit") == 0)
+	  exit();
       tokens = tokenizeTheCommand(command);
 
       pid = fork();
