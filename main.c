@@ -74,7 +74,7 @@ int main(void)
       pid = fork();
       if (pid == -1)
       {
-	write(1, "hsh: Fails to fork the process\n", 31);
+	write(1, "hsh: Failed to fork the process\n", 31);
 	exit(1);
       }
       else if (pid == 0)
