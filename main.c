@@ -40,17 +40,17 @@ void executeCommand(char **tokens)
    char* pathToken;
    char* path;
 	
-   pathEnv = strtok(pathEnv, ":");
+   pathToken = strtok(pathEnv, ":");
    while (pathEnv != NULL)
    {
-      path = malloc(strlen(tokens[0]) + strlen(pathEnv) + 2); 
+      path = malloc(strlen(tokens[0]) + strlen(pathToken) + 2); 
       sprintf(path, "%s/%s", pathToken, tokens[0]);
       err = execve(path, tokens, NULL);
       if (err == -1)      
-            pathEnv = strtok(NULL, ":");
+            pathToken = strtok(NULL, ":");
       else
       {
-	    pathEnv = NULL;
+	    pathToken = NULL;
 	    free(path);
       }
    }
