@@ -94,7 +94,7 @@ int main(void)
 		else if (pid == 0)
 		{
 			if (strcmp(tokens[0], "env") == 0)
-				execve("/usr/bin/env", tokens, NULL);
+				execve("/usr/bin", tokens, NULL);
 			else
 				executeCommand(tokens);
 		}
