@@ -85,7 +85,7 @@ int main(void)
 			exit(0);
 
 		if (strcmp(command, "env") == 0)
-			execve("/usr/bin/env", NULL, NULL);
+			execve("/usr/bin/env", "env", NULL);
 
 		tokens = tokenizeTheCommand(command);
 
