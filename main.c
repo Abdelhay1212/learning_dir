@@ -11,22 +11,22 @@
  **/
 char **tokenizeTheCommand(char *command)
 {
-   int i = 0;
-   char *token;
-   char **tokens;
+	int i = 0;
+	char *token;
+	char **tokens;
 
-   tokens = malloc(20 * sizeof(char *));
+	tokens = malloc(20 * sizeof(char *));
 
-   token = strtok(command, " ");
-   while (token != NULL)
-   {
-      tokens[i] = strdup(token);
-      token = strtok(NULL, " ");
-      i++;
-   }
-   tokens[i] = NULL;
+	token = strtok(command, " ");
+	while (token != NULL)
+	{
+		tokens[i] = strdup(token);
+		token = strtok(NULL, " ");
+		i++;
+	}
+	tokens[i] = NULL;
 
-   return (tokens);
+	return (tokens);
 }
 
 /**
@@ -35,25 +35,25 @@ char **tokenizeTheCommand(char *command)
  **/
 void executeCommand(char **tokens)
 {
-   int err;
-   char* pathEnv = getenv("PATH");
-   char* pathToken;
-   char* path;
+	int err;
+	char* pathEnv = getenv("PATH");
+	char* pathToken;
+	char* path;
 	
-   pathToken = strtok(pathEnv, ":");
-   while (pathEnv != NULL)
-   {
-      path = malloc(strlen(tokens[0]) + strlen(pathToken) + 2); 
-      sprintf(path, "%s/%s", pathToken, tokens[0]);
-      err = execve(path, tokens, NULL);
-      if (err == -1)      
-            pathToken = strtok(NULL, ":");
-      else
-      {
-	    pathToken = NULL;
-	    free(path);
-      }
-   }
+	pathToken = strtok(pathEnv, ":");
+	while (pathEnv != NULL)
+	{
+		path = malloc(strlen(tokens[0]) + strlen(pathToken) + 2); 
+		sprintf(path, "%s/%s", pathToken, tokens[0]);
+		err = execve(path, tokens, NULL);
+		if (err == -1)      
+			pathToken = strtok(NULL, ":");
+		else
+		{
+			pathToken = NULL;
+			free(path);
+		}
+	}
 }
 
 /**
@@ -62,47 +62,45 @@ void executeCommand(char **tokens)
  **/
 int main(void)
 {
-   int i;
-   pid_t pid;
-   char *command;
-   char **tokens;
-   size_t bufsize = 0;
+	int i;
+	pid_t pid;
+	char *command;
+	char **tokens;
+	size_t bufsize = 0;
 
-   while (1)
-   {
-      int err;
+	while (1)
+	{
+		int err;
 
-      write(1, "$ ", 2);
-      err = getline(&command, &bufsize, stdin);
-      if (err == -1)
-      {
-	write(1, "\n", 1);
-      }
+		write(1, "$ ", 2);
+		err = getline(&command, &bufsize, stdin);
+		if (err == -1)
+		{
+			write(1, "\n", 1);
+		}
 
-      command[strcspn(command, "\n")] = '\0';
-      if (strcmp(command, "exit") == 0)
-	  exit(0);
-      tokens = tokenizeTheCommand(command);
+		command[strcspn(command, "\n")] = '\0';
+		if (strcmp(command, "exit") == 0)
+			exit(0);
+		tokens = tokenizeTheCommand(command);
 
-      pid = fork();
-      if (pid == -1)
-      {
-	write(1, "hsh: Failed to fork the process\n", 31);
-      }
-      else if (pid == 0)
-      {
-	 setenv("TERM", "xterm", 1);
-         executeCommand(tokens);
-      }
-      else
-         wait(NULL);
+		pid = fork();
+		if (pid == -1)
+		{
+			write(1, "hsh: Failed to fork the process\n", 31);
+		}
+		else if (pid == 0)
+		{
+			executeCommand(tokens);
+		}
+		else
+			wait(NULL);
 
-      for (i = 0; tokens[i] != NULL; i++)
-         free(tokens[i]);
-      free(tokens);
-   }
-
-   free(command);
+		for (i = 0; tokens[i] != NULL; i++)
+			free(tokens[i]);
+		free(tokens);
+	}
+free(command);
 
    return (0);
 }
