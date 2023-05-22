@@ -84,9 +84,6 @@ int main(void)
 		if (strcmp(command, "exit") == 0)
 			exit(0);
 
-		if (strcmp(command, "env") == 0)
-			execve("/usr/bin/env", "env", NULL);
-
 		tokens = tokenizeTheCommand(command);
 
 		pid = fork();
@@ -96,7 +93,10 @@ int main(void)
 		}
 		else if (pid == 0)
 		{
-			executeCommand(tokens);
+			if (strcmp(tokens[0], "env") == 0)
+				execve("/usr/bin/env", tokens, NULL);
+			else
+				executeCommand(tokens);
 		}
 		else
 			wait(NULL);
