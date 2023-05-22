@@ -80,8 +80,13 @@ int main(void)
 		}
 
 		command[strcspn(command, "\n")] = '\0';
+
 		if (strcmp(command, "exit") == 0)
 			exit(0);
+
+		if (strcmp(command, "env") == 0)
+			execve("/usr/bin/env", NULL, NULL);
+
 		tokens = tokenizeTheCommand(command);
 
 		pid = fork();
