@@ -126,11 +126,12 @@ int main(void)
 {
 	int i;
 	pid_t pid;
+	int shouldExit = 1;
 	char command[1024];
 	char **tokens;
 	size_t bufferSize = 1024;
 
-	while (1)
+	while (shouldExit)
 	{
 
 		write(1, "$ ", 2);
@@ -139,7 +140,7 @@ int main(void)
 		
 		if (strcmp(tokens[0], "exit") == 0)
 		{
-			/*shouldExit = 1;*/
+			shouldExit = 0;
 			_exitShell();
 		}
 
