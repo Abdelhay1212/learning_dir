@@ -5,6 +5,8 @@
 #include <unistd.h>
 #include <sys/wait.h>
 
+extern char **environ;
+
 /**
  * tokenizeTheCommand - tokenization of the command
  * Return: pointer to pointer
@@ -70,9 +72,12 @@ void _getline(char *buffer, size_t bufferSize)
  * printEnv - prints the envirenmnt variables 
  * Return: void
  **/
-void printEnv(char **env)
+void printEnv()
 {
+	char **env;
 	unsigned int i;
+	
+	env = environ;
 
 	i = 0;
 	while (env[i] != NULL)
@@ -86,7 +91,7 @@ void printEnv(char **env)
  * _exit - exit with error number
  * Return: void
  **/
-void _exit(char **tokens)
+void _exitShell(char **tokens)
 {
 	int err, i = 0;
 	
@@ -106,7 +111,7 @@ void _exit(char **tokens)
  * main - takes a command and execute it
  * Return: integer
  **/
-int main(..., char **env)
+int main(void)
 {
 	int i;
 	pid_t pid;
@@ -131,9 +136,9 @@ int main(..., char **env)
 			else if (pid == 0)
 			{
 				if (strcmp(tokens[0], "exit") == 0)
-					_exit(tokens);
+					_exitShell(tokens);
 				else if (strcmp(tokens[0], "env") == 0)
-					printEnv(env);
+					printEnv();
 				else
 					executeCommand(tokens);
 			}
