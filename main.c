@@ -83,10 +83,27 @@ void printEnv(char **env)
 }
 
 /**
+ * _exit - exit with error number
+ * Return: integer
+ **/
+int _exit(char **tokens)
+{
+	int err;
+	
+	if (strlen(tokens) == 2)
+	{
+		err = atoi(tokens[1]);
+		exit(err);
+	}
+	else
+		exit(0);
+}
+
+/**
  * main - takes a command and execute it
  * Return: integer
  **/
-int main(int ac, char *av[], char **env)
+int main(NULL, NULL, char **env)
 {
 	int i;
 	pid_t pid;
@@ -100,10 +117,10 @@ int main(int ac, char *av[], char **env)
 		write(1, "$ ", 2);
 		_getline(command, bufferSize);
 
-		if (strcmp(command, "exit") == 0)
-			exit(0);
-
 		tokens = tokenizeTheCommand(command);
+		
+		if (strcmp(tokens[0], "exit") == 0)
+			_exit(tokens);
 
 		if (tokens[0] != NULL)
 		{
@@ -114,7 +131,7 @@ int main(int ac, char *av[], char **env)
 			}
 			else if (pid == 0)
 			{
-				if (strcmp(command, "env") == 0)
+				if (strcmp(tokens[0], "env") == 0)
 					printEnv(env);
 				else
 					executeCommand(tokens);
