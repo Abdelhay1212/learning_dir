@@ -108,7 +108,6 @@ int main(void)
 			free(tokens[i]);
 		free(tokens);
 	}
-	free(command);
 
 	return (0);
 }
