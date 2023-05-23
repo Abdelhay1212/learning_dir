@@ -90,7 +90,7 @@ void printEnv()
 			break;
 		}
 		
-		bytes = write(1, '\n', 1);
+		bytes = write(1, "\n", 1);
 		if (bytes == -1)
 		{
 			perror("write");
