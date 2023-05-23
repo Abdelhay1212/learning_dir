@@ -1,5 +1,4 @@
 #include <stdio.h>
-/*#include <shell.h>*/
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
@@ -137,6 +136,12 @@ int main(void)
 		write(1, "$ ", 2);
 		_getline(command, bufferSize);
 		tokens = tokenizeTheCommand(command);
+		
+		if (strcmp(tokens[0], "exit") == 0)
+		{
+			/*shouldExit = 1;*/
+			_exitShell();
+		}
 
 		if (tokens[0] != NULL)
 		{
@@ -147,9 +152,7 @@ int main(void)
 			}
 			else if (pid == 0)
 			{
-				if (strcmp(tokens[0], "exit") == 0)
-					_exitShell();
-				else if (strcmp(tokens[0], "env") == 0)
+				if (strcmp(tokens[0], "env") == 0)
 					printEnv();
 				else
 					executeCommand(tokens);
