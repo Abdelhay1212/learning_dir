@@ -107,7 +107,7 @@ void printEnv()
  **/
 void _exitShell(char **tokens)
 {
-	int err;
+	/*int err;
 	
 	if (tokens[1] != NULL)
 	{
@@ -115,7 +115,8 @@ void _exitShell(char **tokens)
 		exit(err);
 	}
 	else
-		exit(0);
+		exit(0);*/
+	exit(0);
 }
 
 /**
