@@ -41,7 +41,7 @@ void executeCommand(char **tokens)
 	char* path;
 	
 	pathToken = strtok(pathEnv, ":");
-	while (pathToken != '\0')
+	while (pathToken)
 	{
 		path = malloc(strlen(tokens[0]) + strlen(pathToken) + 2); 
 		sprintf(path, "%s/%s", pathToken, tokens[0]);
