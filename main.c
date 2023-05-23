@@ -82,7 +82,21 @@ void printEnv()
 	i = 0;
 	while (env[i] != NULL)
 	{
-		printf("%s\n", env[i]);
+		size_t len = strlen(env[i]);
+		ssize_t bytes = write(1, env[i], len);
+		if (bytes == -1)
+		{
+			perror("write");
+			break;
+		}
+		
+		bytes = write(1, '\n', 1);
+		if (bytes == -1)
+		{
+			perror("write");
+			break;
+		}
+
 		i++;
 	}
 }
