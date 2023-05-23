@@ -84,9 +84,9 @@ void printEnv(char **env)
 
 /**
  * _exit - exit with error number
- * Return: integer
+ * Return: void
  **/
-int _exit(char **tokens)
+void _exit(char **tokens)
 {
 	int err, i = 0;
 	
@@ -106,7 +106,7 @@ int _exit(char **tokens)
  * main - takes a command and execute it
  * Return: integer
  **/
-int main(NULL, NULL, char **env)
+int main(..., char **env)
 {
 	int i;
 	pid_t pid;
