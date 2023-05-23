@@ -55,11 +55,11 @@ void executeCommand(char **tokens)
  * main - takes input from STDIN
  * Return: string
  **/
-void getInput(char *buffer)
+void getInput(char *buffer, size_t bufferSize)
 {
 	int bytes;
-	
-	bytes = read(STDIN_FILENO, buffer, sizeof(buffer));
+
+	bytes = read(STDIN_FILENO, buffer, bufferSize);
 	if (bytes == -1)
 		perror("hsh");
 	else
@@ -74,15 +74,15 @@ int main(void)
 {
 	int i;
 	pid_t pid;
-	char *command;
+	char command[1024];
 	char **tokens;
-	/*size_t bufsize = 0;*/
+	size_t bufferSize = 1024;
 
 	while (1)
 	{
 
 		write(1, "$ ", 2);
-		getInput(command);
+		_getline(command, bufferSize);
 
  		/*command[strcspn(command, "\n")] = '\0';*/
 
