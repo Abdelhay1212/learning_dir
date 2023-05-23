@@ -4,6 +4,7 @@
 #include <string.h>
 #include <unistd.h>
 #include <sys/wait.h>
+#include <errno.h>
 
 /**
  * tokenizeTheCommand - tokenization of the command
@@ -54,6 +55,11 @@ void executeCommand(char **tokens)
 		}
 		
 		pathToken = strtok(NULL, ":");
+	}
+	
+	if (errno == ENOENT)
+	{
+		perror("Command not found");
 	}
 }
 
