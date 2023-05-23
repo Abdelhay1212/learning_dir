@@ -55,7 +55,6 @@ void executeCommand(char **tokens)
 			break;
 		}
 		
-		err = 0;
 		pathToken = strtok(NULL, ":");
 	}
 	
