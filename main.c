@@ -107,12 +107,9 @@ void printEnv()
  **/
 void _exitShell(char **tokens)
 {
-	int err, i = 0;
+	int err;
 	
-	while (tokens[i] != NULL)
-		i++;
-	
-	if (i == 2)
+	if (tokens[1] != NULL)
 	{
 		err = atoi(tokens[1]);
 		exit(err);
