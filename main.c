@@ -54,6 +54,9 @@ void executeCommand(char **tokens)
 			free(path);
 		}
 	}
+	
+	if (err == -1)
+		write(1, "hsh: No such file or directory\n", 31);
 }
 
 /**
