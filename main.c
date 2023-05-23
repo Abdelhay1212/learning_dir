@@ -55,7 +55,7 @@ void executeCommand(char **tokens)
  * main - takes input from STDIN
  * Return: string
  **/
-void getInput(char *buffer, size_t bufferSize)
+void _getline(char *buffer, size_t bufferSize)
 {
 	int bytes;
 
