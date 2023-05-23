@@ -4,6 +4,7 @@
 #include <string.h>
 #include <unistd.h>
 #include <sys/wait.h>
+#include <errno.h>
 
 /**
  * tokenizeTheCommand - tokenization of the command
@@ -57,7 +58,7 @@ void executeCommand(char **tokens)
 		pathToken = strtok(NULL, ":");
 	}
 	
-	if (err == -1)
+	if (errno == ENOENT)
 		write(1, "hsh: No such file or directory\n", 31);
 }
 
