@@ -105,7 +105,7 @@ void printEnv()
  * _exit - exit with error number
  * Return: void
  **/
-void _exitShell(char **tokens)
+void _exitShell()
 {
 	/*int err;
 	
@@ -148,7 +148,7 @@ int main(void)
 			else if (pid == 0)
 			{
 				if (strcmp(tokens[0], "exit") == 0)
-					_exitShell(tokens);
+					_exitShell();
 				else if (strcmp(tokens[0], "env") == 0)
 					printEnv();
 				else
