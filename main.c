@@ -138,6 +138,7 @@ int main(void)
 					printEnv();
 				else
 					executeCommand(tokens);
+				exit(0);
 			}
 			else
 				wait(NULL);
