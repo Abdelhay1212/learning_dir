@@ -35,7 +35,7 @@ char **tokenizeTheCommand(char *command)
  **/
 void executeCommand(char **tokens)
 {
-	int err = 0;
+	int err;
 	char* pathEnv = getenv("PATH");
 	char* pathToken;
 	char* path;
@@ -43,11 +43,12 @@ void executeCommand(char **tokens)
 	pathToken = strtok(pathEnv, ":");
 	while (pathToken != NULL)
 	{
+		err = 0;
 		path = malloc(strlen(tokens[0]) + strlen(pathToken) + 2); 
 		sprintf(path, "%s/%s", pathToken, tokens[0]);
 		err = execve(path, tokens, NULL);
 
-		if (err != -1) 
+		if (err != -1)
 		{
 			free(path);
 			break;
