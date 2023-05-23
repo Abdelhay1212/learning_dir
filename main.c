@@ -101,24 +101,6 @@ void printEnv()
 }
 
 /**
- * _exit - exit with error number
- * Return: void
- **/
-void _exitShell()
-{
-	/*int err;
-	
-	if (tokens[1] != NULL)
-	{
-		err = atoi(tokens[1]);
-		exit(err);
-	}
-	else
-		exit(0);*/
-	exit(0);
-}
-
-/**
  * main - takes a command and execute it
  * Return: integer
  **/
@@ -126,12 +108,12 @@ int main(void)
 {
 	int i;
 	pid_t pid;
-	int shouldExit = 1;
+	int shouldExit = 0;
 	char command[1024];
 	char **tokens;
 	size_t bufferSize = 1024;
 
-	while (shouldExit)
+	while (!shouldExit)
 	{
 
 		write(1, "$ ", 2);
@@ -140,8 +122,7 @@ int main(void)
 		
 		if (strcmp(tokens[0], "exit") == 0)
 		{
-			shouldExit = 0;
-			_exitShell();
+			shouldExit = 1;
 		}
 
 		if (tokens[0] != NULL)
