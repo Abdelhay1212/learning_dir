@@ -52,6 +52,24 @@ void executeCommand(char **tokens)
 }
 
 /**
+ * main - takes input from STDIN
+ * Return: string
+ **/
+char *getInput()
+{
+	char buffer[1024];
+	int bytes; 
+	
+	bytes = read(STDIN_FILENO, buffer, sizeof(buffer));
+	if (bytes == -1)
+		perror("hsh");
+	else
+		buffer[bytes] = '\0';
+	
+	return (buffer);
+}
+
+/**
  * main - takes a command and execute it
  * Return: integer
  **/
@@ -68,36 +86,35 @@ int main(void)
 		int err;
 
 		write(1, "$ ", 2);
-		err = getline(&command, &bufsize, stdin);
-		if (err == -1)
-		{
-			write(1, "\n", 1);
-		}
+		command = getInput();
 
-		command[strcspn(command, "\n")] = '\0';
+// 		command[strcspn(command, "\n")] = '\0';
 
 		if (strcmp(command, "exit") == 0)
 			exit(0);
 
 		tokens = tokenizeTheCommand(command);
 
-		pid = fork();
-		if (pid == -1)
+		if (tokens[0] != NULL)
 		{
-			write(1, "hsh: Failed to fork the process\n", 31);
+			pid = fork();
+			if (pid == -1)
+			{
+				write(1, "hsh: Failed to fork the process\n", 31);
+			}
+			else if (pid == 0)
+			{
+				executeCommand(tokens);
+			}
+			else
+				wait(NULL);
 		}
-		else if (pid == 0)
-		{
-			executeCommand(tokens);
-		}
-		else
-			wait(NULL);
 
 		for (i = 0; tokens[i] != NULL; i++)
 			free(tokens[i]);
 		free(tokens);
 	}
-free(command);
+	free(command);
 
-   return (0);
+	return (0);
 }
