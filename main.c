@@ -84,7 +84,7 @@ int main(void)
 		write(1, "$ ", 2);
 		_getline(command, bufferSize);
 
- 		/*command[strcspn(command, "\n")] = '\0';*/
+ 		command[strcspn(command, "\n")] = '\0';
 
 		if (strcmp(command, "exit") == 0)
 			exit(0);
