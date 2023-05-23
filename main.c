@@ -4,7 +4,6 @@
 #include <string.h>
 #include <unistd.h>
 #include <sys/wait.h>
-#include <errno.h>
 
 /**
  * tokenizeTheCommand - tokenization of the command
@@ -44,7 +43,6 @@ void executeCommand(char **tokens)
 	pathToken = strtok(pathEnv, ":");
 	while (pathToken != NULL)
 	{
-		err = 0;
 		path = malloc(strlen(tokens[0]) + strlen(pathToken) + 2); 
 		sprintf(path, "%s/%s", pathToken, tokens[0]);
 		err = execve(path, tokens, NULL);
@@ -57,9 +55,6 @@ void executeCommand(char **tokens)
 		
 		pathToken = strtok(NULL, ":");
 	}
-	
-	if (errno == ENOENT)
-		write(1, "hsh: No such file or directory\n", 31);
 }
 
 /**
