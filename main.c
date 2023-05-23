@@ -52,8 +52,8 @@ void executeCommand(char **tokens)
 }
 
 /**
- * main - takes input from STDIN
- * Return: string
+ * _getline - takes input from STDIN
+ * Return: void
  **/
 void _getline(char *buffer, size_t bufferSize)
 {
@@ -67,10 +67,26 @@ void _getline(char *buffer, size_t bufferSize)
 }
 
 /**
+ * printEnv - prints the envirenmnt variables 
+ * Return: void
+ **/
+void printEnv(char **env)
+{
+	unsigned int i;
+
+	i = 0;
+	while (env[i] != NULL)
+	{
+		printf("%s\n", env[i]);
+		i++;
+	}
+}
+
+/**
  * main - takes a command and execute it
  * Return: integer
  **/
-int main(void)
+int main(int ac, char *av[], char **env)
 {
 	int i;
 	pid_t pid;
@@ -98,7 +114,10 @@ int main(void)
 			}
 			else if (pid == 0)
 			{
-				executeCommand(tokens);
+				if (strcmp(command, "env") == 0)
+					printEnv(env);
+				else
+					executeCommand(tokens);
 			}
 			else
 				wait(NULL);
