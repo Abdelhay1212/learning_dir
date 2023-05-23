@@ -88,9 +88,12 @@ void printEnv(char **env)
  **/
 int _exit(char **tokens)
 {
-	int err;
+	int err, i = 0;
 	
-	if (strlen(tokens) == 2)
+	while (tokens[i] != NULL)
+		i++;
+	
+	if (i == 2)
 	{
 		err = atoi(tokens[1]);
 		exit(err);
@@ -116,11 +119,7 @@ int main(NULL, NULL, char **env)
 
 		write(1, "$ ", 2);
 		_getline(command, bufferSize);
-
 		tokens = tokenizeTheCommand(command);
-		
-		if (strcmp(tokens[0], "exit") == 0)
-			_exit(tokens);
 
 		if (tokens[0] != NULL)
 		{
@@ -131,7 +130,9 @@ int main(NULL, NULL, char **env)
 			}
 			else if (pid == 0)
 			{
-				if (strcmp(tokens[0], "env") == 0)
+				if (strcmp(tokens[0], "exit") == 0)
+					_exit(tokens);
+				else if (strcmp(tokens[0], "env") == 0)
 					printEnv(env);
 				else
 					executeCommand(tokens);
