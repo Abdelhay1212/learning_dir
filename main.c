@@ -4,7 +4,6 @@
 #include <string.h>
 #include <unistd.h>
 #include <sys/wait.h>
-#include <errno.h>
 
 /**
  * tokenizeTheCommand - tokenization of the command
@@ -37,6 +36,7 @@ char **tokenizeTheCommand(char *command)
 void executeCommand(char **tokens)
 {
 	int err;
+	int commandNotFound = 1;
 	char* pathEnv = getenv("PATH");
 	char* pathToken;
 	char* path;
@@ -51,15 +51,17 @@ void executeCommand(char **tokens)
 		if (err != -1)
 		{
 			free(path);
+			commandNotFound = 0;
 			break;
 		}
 		
+		err = 0;
 		pathToken = strtok(NULL, ":");
 	}
 	
-	if (errno == ENOENT)
+	if (commandNotFound == 1)
 	{
-		perror("Command not found");
+		write(1, "hsh: No such file or directory\n", 31);
 	}
 }
 
