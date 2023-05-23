@@ -63,7 +63,7 @@ void _getline(char *buffer, size_t bufferSize)
 	if (bytes == -1)
 		perror("hsh");
 	else
-		buffer[bytes] = '\0';
+		buffer[strcspn(buffer, "\n")] = '\0';
 }
 
 /**
@@ -83,8 +83,6 @@ int main(void)
 
 		write(1, "$ ", 2);
 		_getline(command, bufferSize);
-
- 		command[strcspn(command, "\n")] = '\0';
 
 		if (strcmp(command, "exit") == 0)
 			exit(0);
