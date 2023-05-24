@@ -109,20 +109,21 @@ int main(void)
 	int i;
 	pid_t pid;
 	int shouldExit = 0;
-	char command[1024];
+	char *command;
 	char **tokens;
 	size_t bufferSize = 1024;
 
-	while (!shouldExit)
+	while (1)
 	{
 
 		write(1, "$ ", 2);
+		command = malloc(1024 * sizeof(char));
 		_getline(command, bufferSize);
 		tokens = tokenizeTheCommand(command);
 		
 		if (strcmp(tokens[0], "exit") == 0)
 		{
-			shouldExit = 1;
+			exit(0);
 		}
 
 		if (tokens[0] != NULL)
@@ -147,6 +148,8 @@ int main(void)
 		for (i = 0; tokens[i] != NULL; i++)
 			free(tokens[i]);
 		free(tokens);
+		
+		free(command);
 	}
 
 	return (0);
