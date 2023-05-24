@@ -142,13 +142,13 @@ int main(void)
 			}
 			else
 				wait(NULL);
-		}
 
-		for (i = 0; tokens[i] != NULL; i++)
-			free(tokens[i]);
-		free(tokens);
+			for (i = 0; tokens[i] != NULL; i++)
+				free(tokens[i]);
+			free(tokens);
 		
-		free(command);
+			free(command);
+		}
 	}
 
 	return (0);
