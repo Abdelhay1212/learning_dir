@@ -108,7 +108,6 @@ int main(void)
 {
 	int i;
 	pid_t pid;
-	int shouldExit = 0;
 	char *command;
 	char **tokens;
 	size_t bufferSize = 1024;
